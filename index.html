@@ -88,12 +88,6 @@
             border-color: rgba(255, 255, 255, 0.2);
             color: #f8fafc;
         }
-        body.dark .logo-box {
-            background: #ffffff;
-        }
-        body.dark .logo-box img {
-            filter: invert(0);
-        }
 
         /* LIGHT THEME */
         body.light {
@@ -143,8 +137,32 @@
             border-color: rgba(255, 255, 255, 0.5);
             color: #0f172a;
         }
-        body.light .logo-box {
-            background: #000000;
+
+        .avatar-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .avatar-glow-bg {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff007f, #ff7700, #ff00ea, #00d2ff);
+            filter: blur(8px);
+            opacity: 0.85;
+            animation: rotateGlow 6s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            0% { filter: hue-rotate(0deg) blur(8px); }
+            100% { filter: hue-rotate(360deg) blur(8px); }
         }
 
         /* Water Droplets Effect on Glass Elements */
@@ -159,19 +177,16 @@
             opacity: 0.8;
         }
 
-        /* Profile Glow Halo */
-        .avatar-glow {
-            position: relative;
-            padding: 3px;
-            background: linear-gradient(45deg, #ff007f, #ff7700, #ff00ea, #00d2ff);
-            border-radius: 50%;
-            box-shadow: 0 0 18px rgba(255, 0, 128, 0.65);
-            animation: rotateGlow 6s linear infinite;
-        }
-
-        @keyframes rotateGlow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        /* Standardized Uniform Icon Block Class */
+        .icon-block-standard {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            min-height: 56px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Hide scrollbars for app-like clean interface */
@@ -186,7 +201,6 @@
     <div id="parallaxBg" class="fluid-pattern"></div>
     <div class="bg-dark-overlay"></div>
 
-    <!-- Main Container Frame (iPhone Pro Aspect Ratio Frame) -->
     <main class="w-full max-w-[430px] min-h-screen md:min-h-[880px] md:max-h-[920px] md:border-[10px] md:border-slate-900/20 md:rounded-[50px] shadow-2xl flex flex-col justify-between p-5 relative overflow-y-auto backdrop-blur-sm z-10">
 
         <header class="w-full flex justify-between items-center text-xs font-semibold pt-1 pb-3 px-2 z-20">
@@ -206,15 +220,16 @@
             </button>
         </header>
 
-        <!-- Dynamic Content View Holder -->
         <div id="appViewport" class="flex-1 flex flex-col justify-start space-y-4 z-10 py-1">
             
             <section class="flex items-center space-x-3.5 px-1 py-2">
-                <div class="avatar-glow shrink-0">
+                <!-- Avatar with glow strictly behind it -->
+                <div class="avatar-container">
+                    <div class="avatar-glow-bg"></div>
                     <img id="userAvatar"
-                         src="https://instagram.fiev10-1.fna.fbcdn.net/v/t51.82787-19/772233000_18454932223184195_334208893958146980_n.jpg?stp=dst-jpg_e0_s150x150_tt6&amp;efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NTYuYzIifQ&amp;_nc_ht=instagram.fiev10-1.fna.fbcdn.net&amp;_nc_cat=111&amp;_nc_oc=Q6cZ2gEcaYCXMmW8m7XxUHqpASXGZmSMgAUNrQsOpCYRFa5JuX9Jh08Y0OKvfZ5Yb2Vyk6g&amp;_nc_ohc=O9ySWhhrjyIQ7kNvwGo3FcJ&amp;_nc_gid=3xrgIO6Dm9MKAt7okHVKYw&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AQHXYKrGF5pCAbpW1NLssYiOBdH8AS7GVG0zvi5yxQR-wg&amp;oe=6A8F52FF&amp;_nc_sid=10d13b" 
+                         src="https://lh3.googleusercontent.com/a/ACg8ocKH_IW8wpLpALaBCpg8zXu6hP0PkD6_eKCbBNC3lJieh1H1KV2x=s400-c" 
                          alt="Elijah Künstler" 
-                         class="w-20 h-20 rounded-full object-cover border-2 border-white/80 shadow-md"
+                         class="w-20 h-20 rounded-full object-cover border-2 border-white/80 shadow-md relative z-10 bg-slate-800"
                          onerror="handleAvatarFallback(this)">
                 </div>
                 <div class="flex flex-col">
@@ -234,9 +249,9 @@
                 <div class="water-droplet w-4 h-4 bottom-3 right-24"></div>
 
                 <div class="flex items-center space-x-4">
-                    <!-- Brand Logo -->
-                    <div class="logo-box w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300 shrink-0 p-2 border border-white/20">
-                        <img src="https://ikunstler.com/Logo_iKu_v25.09.08-2__ffccd8__1778794058172.png" alt="iKünstler Logo" class="w-full h-full object-contain">
+                    <!-- Brand Logo: No background box, pure floating logo image -->
+                    <div class="w-14 h-14 flex items-center justify-center shrink-0 transform group-hover:scale-105 transition-transform duration-300">
+                        <img src="https://ikunstler.com/Logo_iKu_v25.09.08-2__ffccd8__1778794058172.png" alt="iKünstler Logo" class="w-full h-full object-contain filter drop-shadow-md">
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-adaptive-main tracking-wide">iKünstler Group</h2>
@@ -256,36 +271,36 @@
                     <h2 class="text-base font-bold text-adaptive-main">Contacts</h2>
                 </div>
 
-                <!-- 5 Interactive Glass Action Buttons -->
-                <div class="grid grid-cols-5 gap-2 pt-1">
+                <!-- 5 Interactive Glass Action Buttons (Standardized 56x56 Size) -->
+                <div class="flex justify-between items-center pt-1">
                     <!-- Phone -->
                     <a href="tel:+380992225513" title="Call +380992225513"
-                       class="liquid-glass-button h-14 flex items-center justify-center p-2 group hover:scale-105 transition-transform">
-                        <img src="https://em-content.zobj.net/source/apple/453/telephone-receiver_1f4de.png" alt="Phone" class="w-9 h-9 object-contain transform group-hover:scale-110 transition-transform">
+                       class="liquid-glass-button icon-block-standard p-2 group hover:scale-105 transition-transform">
+                        <img src="https://em-content.zobj.net/source/apple/453/telephone-receiver_1f4de.png" alt="Phone" class="w-8 h-8 object-contain transform group-hover:scale-110 transition-transform">
                     </a>
 
                     <!-- Email -->
                     <a href="mailto:elijah.kunstler@gmail.com" title="Email elijah.kunstler@gmail.com"
-                       class="liquid-glass-button h-14 flex items-center justify-center p-2 group hover:scale-105 transition-transform">
-                        <img src="https://em-content.zobj.net/source/apple/453/e-mail_1f4e7.png" alt="Email" class="w-9 h-9 object-contain transform group-hover:scale-110 transition-transform">
+                       class="liquid-glass-button icon-block-standard p-2 group hover:scale-105 transition-transform">
+                        <img src="https://em-content.zobj.net/source/apple/453/e-mail_1f4e7.png" alt="Email" class="w-8 h-8 object-contain transform group-hover:scale-110 transition-transform">
                     </a>
 
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/ikunstler" target="_blank" rel="noopener noreferrer" title="Instagram"
-                       class="liquid-glass-button h-14 flex items-center justify-center p-2 group hover:scale-105 transition-transform">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Instagram.svg/960px-Instagram.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="Instagram" class="w-9 h-9 object-contain transform group-hover:scale-110 transition-transform">
+                       class="liquid-glass-button icon-block-standard p-2 group hover:scale-105 transition-transform">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Instagram.svg/960px-Instagram.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="Instagram" class="w-8 h-8 object-contain transform group-hover:scale-110 transition-transform">
                     </a>
 
                     <!-- WhatsApp -->
                     <a href="https://wa.me/380992225513" target="_blank" rel="noopener noreferrer" title="WhatsApp"
-                       class="liquid-glass-button h-14 flex items-center justify-center p-2 group hover:scale-105 transition-transform">
-                        <img src="https://www.freepnglogos.com/uploads/whatsapp-png-logo-1.png" alt="WhatsApp" class="w-9 h-9 object-contain transform group-hover:scale-110 transition-transform">
+                       class="liquid-glass-button icon-block-standard p-2 group hover:scale-105 transition-transform">
+                        <img src="https://www.freepnglogos.com/uploads/whatsapp-png-logo-1.png" alt="WhatsApp" class="w-8 h-8 object-contain transform group-hover:scale-110 transition-transform">
                     </a>
 
                     <!-- Viber -->
                     <a href="viber://chat?number=%2B380660666747" onclick="openViber(event)" title="Viber"
-                       class="liquid-glass-button h-14 flex items-center justify-center p-2 group hover:scale-105 transition-transform">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Viber_logo_2018_%28without_text%29.svg/1280px-Viber_logo_2018_%28without_text%29.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="Viber" class="w-9 h-9 object-contain transform group-hover:scale-110 transition-transform">
+                       class="liquid-glass-button icon-block-standard p-2 group hover:scale-105 transition-transform">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Viber_logo_2018_%28without_text%29.svg/1280px-Viber_logo_2018_%28without_text%29.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="Viber" class="w-8 h-8 object-contain transform group-hover:scale-110 transition-transform">
                     </a>
                 </div>
             </section>
@@ -298,14 +313,14 @@
                 <div class="flex justify-between items-center">
                     <div class="z-10 flex-1 pr-2">
                         <h2 class="text-base font-bold text-adaptive-main mb-3">Vibe Apps Gallery</h2>
-                        <div class="flex space-x-3 items-center">
-                            <!-- Semi-transparent Apple Composer Icon -->
-                            <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md p-1.5 flex justify-center items-center shadow-inner border border-white/30 pointer-events-none opacity-80">
-                                <img src="https://static.wikia.nocookie.net/logopedia/images/a/a5/Icon_Composer.png/revision/latest/scale-to-width-down/200?cb=20260608175839" alt="Apple Composer" class="w-full h-full object-contain filter grayscale opacity-75">
+                        <div class="flex space-x-2.5 items-center">
+                            <!-- Apple Composer Icon (Standard 56x56) -->
+                            <div class="icon-block-standard bg-white/20 backdrop-blur-md p-2 flex justify-center items-center shadow-inner border border-white/30 pointer-events-none opacity-80">
+                                <img src="https://static.wikia.nocookie.net/logopedia/images/a/a5/Icon_Composer.png/revision/latest/scale-to-width-down/200?cb=20260608175839" alt="Apple Composer" class="w-8 h-8 object-contain filter grayscale opacity-75">
                             </div>
-                            <!-- Semi-transparent Wrench Icon -->
-                            <div class="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md p-1.5 flex justify-center items-center shadow-inner border border-white/20 pointer-events-none opacity-80">
-                                <img src="https://em-content.zobj.net/source/apple/453/wrench_1f527.png" alt="Wrench" class="w-full h-full object-contain filter grayscale opacity-75">
+                            <!-- Wrench Icon (Standard 56x56) -->
+                            <div class="icon-block-standard bg-white/15 backdrop-blur-md p-2 flex justify-center items-center shadow-inner border border-white/20 pointer-events-none opacity-80">
+                                <img src="https://em-content.zobj.net/source/apple/453/wrench_1f527.png" alt="Wrench" class="w-8 h-8 object-contain filter grayscale opacity-75">
                             </div>
                         </div>
                     </div>
@@ -328,18 +343,18 @@
                 <h2 class="text-base font-bold text-adaptive-main mb-3">My projects</h2>
 
                 <div class="flex space-x-3">
-                    <!-- Palette Icon Link -->
+                    <!-- Palette Icon Link (Standard 56x56) -->
                     <a href="https://www.instagram.com/ikunstler.art/" target="_blank" rel="noopener noreferrer"
                        title="ikunstler.art"
-                       class="liquid-glass-button w-20 h-20 flex items-center justify-center p-3.5 hover:scale-105 transition-transform">
-                        <img src="https://em-content.zobj.net/source/apple/453/artist-palette_1f3a8.png" alt="Artist Palette" class="w-full h-full object-contain">
+                       class="liquid-glass-button icon-block-standard p-2.5 hover:scale-105 transition-transform">
+                        <img src="https://em-content.zobj.net/source/apple/453/artist-palette_1f3a8.png" alt="Artist Palette" class="w-8 h-8 object-contain">
                     </a>
 
-                    <!-- Briefcase Icon Link -->
+                    <!-- Briefcase Icon Link (Standard 56x56) -->
                     <a href="https://www.instagram.com/iku.group/" target="_blank" rel="noopener noreferrer"
                        title="iku.group"
-                       class="liquid-glass-button w-20 h-20 flex items-center justify-center p-3.5 hover:scale-105 transition-transform">
-                        <img src="https://em-content.zobj.net/source/apple/453/briefcase_1f4bc.png" alt="Briefcase" class="w-full h-full object-contain">
+                       class="liquid-glass-button icon-block-standard p-2.5 hover:scale-105 transition-transform">
+                        <img src="https://em-content.zobj.net/source/apple/453/briefcase_1f4bc.png" alt="Briefcase" class="w-8 h-8 object-contain">
                     </a>
                 </div>
             </section>
@@ -358,7 +373,7 @@
             <!-- Single App Card: TriScreen -->
             <div class="liquid-glass p-5">
                 <div class="flex items-center space-x-4 mb-4">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white shadow-lg text-2xl shrink-0">
+                    <div class="icon-block-standard rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white shadow-lg text-2xl shrink-0">
                         📱
                     </div>
                     <div>
